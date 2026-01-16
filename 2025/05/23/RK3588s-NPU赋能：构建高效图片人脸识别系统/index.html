@@ -1,0 +1,1959 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="RK3588s NPU赋能：构建实时图片人脸识别系统, Wait Aurora">
+    <meta name="description" content="基于RK3588s NPU加速的人脸识别系统实现">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    
+
+    <title>RK3588s NPU赋能：构建实时图片人脸识别系统 | Wait Aurora</title>
+    <link rel="icon" type="image/png" href="/JunyongCHEN/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/JunyongCHEN/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/JunyongCHEN/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/JunyongCHEN/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/JunyongCHEN/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/JunyongCHEN/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/JunyongCHEN/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/JunyongCHEN/css/my.css">
+
+    <script src="/JunyongCHEN/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/JunyongCHEN/" class="waves-effect waves-light">
+                    
+                    <img src="/JunyongCHEN/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Wait Aurora</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/JunyongCHEN/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/JunyongCHEN/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/JunyongCHEN/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/JunyongCHEN/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/JunyongCHEN/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/JunyongCHEN/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/JunyongCHEN/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/JunyongCHEN/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Wait Aurora</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/JunyongCHEN/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/JunyongCHEN/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/JunyongCHEN/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/JunyongCHEN/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/JunyongCHEN/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/JunyongCHEN/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/JunyongCHEN/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/JunyongCHEN/medias/featureimages/rk3588.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">RK3588s NPU赋能：构建实时图片人脸识别系统</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/JunyongCHEN/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/JunyongCHEN/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">
+                                <span class="chip bg-color">计算机视觉</span>
+                            </a>
+                        
+                            <a href="/JunyongCHEN/tags/RK3588/">
+                                <span class="chip bg-color">RK3588</span>
+                            </a>
+                        
+                            <a href="/JunyongCHEN/tags/NPU/">
+                                <span class="chip bg-color">NPU</span>
+                            </a>
+                        
+                            <a href="/JunyongCHEN/tags/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/">
+                                <span class="chip bg-color">人脸识别</span>
+                            </a>
+                        
+                            <a href="/JunyongCHEN/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                                <span class="chip bg-color">深度学习</span>
+                            </a>
+                        
+                            <a href="/JunyongCHEN/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/">
+                                <span class="chip bg-color">嵌入式</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/JunyongCHEN/categories/AI/" class="post-category">
+                                AI
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2025-05-23
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/JunyongCHEN/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="RK3588s-NPU赋能：构建实时图片人脸识别系统"><a href="#RK3588s-NPU赋能：构建实时图片人脸识别系统" class="headerlink" title="RK3588s NPU赋能：构建实时图片人脸识别系统"></a>RK3588s NPU赋能：构建实时图片人脸识别系统</h1><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h2><h3 id="1-1-项目背景"><a href="#1-1-项目背景" class="headerlink" title="1.1 项目背景"></a>1.1 项目背景</h3><p>这个项目是我在大三下学期（2024年7月）的”深度学习方法与应用”课程中完成的课程设计。当时只是简单介绍了实现思路，完成了结课论文，没有详细记录完成过程。现在回过头来，重新整理并从零复现当时的完成流程。</p>
+<p>记得那时NPU技术开始兴起，RK3588原本是用于电视机顶盒的产品线，得益于NPU对AI加速的能力，被开发板厂家改造成了类似树莓派的开发板。当时由于树莓派产能问题，价格被炒得翻倍，直接变成了理财产品。而国产的RK3588不仅性能强劲，还具备NPU加速能力，对标树莓派4B/5B，各方面性能都更胜一筹。RK3588s的6T算力在同价位产品中也是数一数二的存在（目前有算力更强的开发板如地瓜机器人的开发板算力好像上了10T）。</p>
+<p>因此，我请老师采购了一块野火的鲁班猫4开发板，板载RK3588s，配备16G内存和256G的eMMC。实物图如下：</p>
+<p><img src="/JunyongCHEN/2025/05/23/RK3588s-NPU%E8%B5%8B%E8%83%BD%EF%BC%9A%E6%9E%84%E5%BB%BA%E9%AB%98%E6%95%88%E5%9B%BE%E7%89%87%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/lubanCat-4.jpg" alt="lubanCat-4"></p>
+<p>LubanCat-4板卡部分硬件资源表：</p>
+<table>
+<thead>
+<tr>
+<th>板卡名称</th>
+<th>LubanCat-4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>电源接口</td>
+<td>Type-C5V@4A直流输入</td>
+</tr>
+<tr>
+<td>主芯片</td>
+<td>RK3588S(四核A76+四核A55、Mali-G610、6T算力)</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>LPDDR4X-4/8GB</td>
+</tr>
+<tr>
+<td>存储</td>
+<td>eMMC-32/64/128GB</td>
+</tr>
+<tr>
+<td>以太网</td>
+<td>10/100/1000M自适应以太网口</td>
+</tr>
+<tr>
+<td>USB2.0</td>
+<td>Type-A接口x3(HOST)</td>
+</tr>
+<tr>
+<td>USB3.0</td>
+<td>Type-A接口x1(HOST)</td>
+</tr>
+<tr>
+<td>USB3.0</td>
+<td>Type-C接口x1(OTG)，固件烧录接口，DP显示（支持与其他屏幕进行多屏异显）</td>
+</tr>
+<tr>
+<td>Debug串口</td>
+<td>一路Debug串口，默认参数1500000-8-N-1</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-实现流程"><a href="#1-2-实现流程" class="headerlink" title="1.2 实现流程"></a>1.2 实现流程</h3><p>首先现在PC上复现人脸识别系统的开源仓库，然后分别在PC和开发板上部署NPU的量化和推理环境，最后在开发板上部署推理模型，实现人脸识别功能。</p>
+<h3 id="1-3-任务刨析"><a href="#1-3-任务刨析" class="headerlink" title="1.3 任务刨析"></a>1.3 任务刨析</h3><p>人脸识别系统不同于单纯的人脸检测，需要对人脸进行特征提取，然后进行人脸比对。因此对于人脸识别任务，主流的方案是将其分解成两个任务，一个是人脸检测，一个是人脸特征提取。<strong>虽然人脸识别的技术已经非常成熟，但是当时在调研时，并没有发现可以直接使用的在该NPU案例</strong>，当时决定做这个系统时心里也很没底，因为要在NPU里面移植两个模型。模型之间是一个串行关系，即先进行人脸检测，然后进行人脸特征提取，最后进行人脸比对。当时在调研时，并没有发现可以直接使用的在该NPU案例，再提取特征。只要有一个模型移植失败或者出现其他问题，整个系统也做不出来。当时因为对RKNN的量化和推理框架不熟悉，代码细节上遇到了问题止步不前，但是好在最后发现了问题所在并成功解决。即使现在，有许多人在该开发板上做了相关的尝试，但也没看到体系化的教程，介绍完整的开发流程。</p>
+<h2 id="2-开源方案复现"><a href="#2-开源方案复现" class="headerlink" title="2 开源方案复现"></a>2 开源方案复现</h2><p>人脸识别技术发展至今已相当成熟，github上有众多开源方案可供参考。然而，这些方案大多专注于单一任务，即人脸检测或人脸特征提取。在进行人脸识别系统开发之前，深入调研并选择合适的开源方案至关重要。考虑到RK3588s NPU的边缘部署特性，我们尤其关注模型的轻量化和推理效率。以下是我在调研过程中整理的一些主流且值得关注的人脸识别方案，我将其分为人脸检测和人脸识别（特征提取）两大部分。</p>
+<h3 id="2-1-人脸检测模型-Face-Detection"><a href="#2-1-人脸检测模型-Face-Detection" class="headerlink" title="2.1 人脸检测模型 (Face Detection)"></a>2.1 人脸检测模型 (Face Detection)</h3><p>人脸检测的目标是在图像中定位所有存在的人脸，并输出其精确的边界框（bounding box）。这一步是整个识别流程的起点。<br><strong>MTCNN (Multi-task Cascaded Convolutional Networks)</strong><br>MTCNN是一种多任务级联卷积神经网络，属于经典的级联网络，包含P-Net、R-Net、O-Net三步，逐步对人脸进行粗筛、细化和关键点定位。其开源仓库为<a href="MTCNN_face_detection_alignment">原版MTCNN</a>和<a href="facenet-pytorch">pytorch版本MTCNN</a>。当时一开始有去尝试复现这个pytorch方案，在量化RKNN模型的时候发现，这个方案是真的将网络分为三个部分，分别由pnet.pt、rnet.pt、onet.pt三个模型组成。那么移植成RKNN的时候，也需要将这三个权重转为RKNN模型。如果这样做的话，一方面工作量会翻了三倍，另外一方面不确定性也大大提高，只要有一个模型出了问题搞不定，这个人脸检测的任务就做不出来。这个方案果断放弃。</p>
+<p><strong>RetinaFace (Single-stage Dense Face Localisation in the Wild)</strong><br>RetinaFace是一种单阶段密集人脸定位网络，通过多尺度特征融合和自适应特征选择，实现高精度的人脸检测。其开源仓库为<a href="Pytorch_Retinaface">RetinaFace</a>。本系统使用的是这个模型。</p>
+<p><strong>CenterFace (A Simple and Strong Anchor-free Face Detector)</strong><br>CenterFace是一种基于锚点自由的单阶段人脸检测网络，通过中心点回归和尺度自适应，实现高效的人脸检测。其开源仓库为<a href="CenterFace">CenterFace</a>。</p>
+<p><strong>Yolo系列</strong><br>这种简单的识别框选任务怎么能少得了Yolo系列呢？Yolo系列是单阶段目标检测算法，通过端到端的方式直接预测目标的边界框和类别。其开源仓库为<a href="yolov5">Yolo</a>。但是比较他不是专门用于人脸检测的模型，如果要使用Yolo还需要自己单独做一下训练，最终的效果也不一定有专门用于人脸识别的模型效果好。</p>
+<p><strong>BlazeFace</strong><br>BlazeFace是一个基于BlazeBlock的轻量级人脸检测网络，利用深度可分离卷积和高效池化策略，实现了快速且精准的人脸检测。其开源代码可在<a href="BlazeFace-PyTorch">BlazeFace</a>找到。该模型由Google专为移动设备优化，旨在追求极致的速度和低功耗。该模块被集成到了MediaPipe中，可以在<a href="mediapipe">MediaPipe</a>找到。</p>
+<p><strong>libfacedetection</strong><br>libfacedetection是一个基于C++的轻量级人脸检测库，通过多尺度特征融合和自适应特征选择，实现高效的人脸检测。其开源仓库为<a href="libfacedetection">libfacedetection</a>。这种直接用C++实现的并不适合用于RKNN的移植，但是这种直接封装为C++的库，可以很方便的移植到开发板上的方式有点意思，记录一下后面玩一下。</p>
+<h3 id="2-2-人脸识别模型-Face-Recognition"><a href="#2-2-人脸识别模型-Face-Recognition" class="headerlink" title="2.2 人脸识别模型 (Face Recognition)"></a>2.2 人脸识别模型 (Face Recognition)</h3><p><strong>FaceNet</strong><br>FaceNet是一个基于深度学习的人脸识别网络，通过端到端的方式直接预测人脸特征。其开源仓库为<a href="facenet-pytorch">FaceNet</a>。一开始复现的是这个开源仓库，但是我复现那会仓库管理有点混乱，最新的master代码有些配置文件丢失了复现不成功，后面发现insightface仓库更加方便好用，直接果断放弃。</p>
+<p><strong>ArcFace</strong><br>ArcFace是一个基于深度学习的人脸识别网络，通过端到端的方式直接预测人脸特征。其开源仓库为<a href="insightface">ArcFace</a>。insightface这个仓库并不仅仅有ArcFace人脸识别的模型，还有其他的一些人脸识别的模型，比如RetinaFace、CenterFace、BlazeFace等。而且代码还直接发布到了pypi上，可以直接安装使用。</p>
+<h3 id="2-3-复现insightface开源仓库"><a href="#2-3-复现insightface开源仓库" class="headerlink" title="2.3 复现insightface开源仓库"></a>2.3 复现insightface开源仓库</h3><p>上面讲到insightface因为代码直接发布到了pypi上，可以直接安装使用，所以复现起来非常方便。该部分的内容主要是参照该仓库的教程进行复现的<a href="python-package">insightface quick start</a>。该python包没有windows的安装包，所以这里使用的复现环境是wsl的Ubuntu 20.04系统。</p>
+<p>安装insightface（在复现时，最新的版本是0.7.3）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip <span class="token function">install</span> <span class="token assign-left variable">insightface</span><span class="token operator">==</span><span class="token number">0.7</span>.3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果你想使用CPU运行，请安装onnxruntime。建议使用CPU的环境，因为我们只是复现验证，不需要动用GPU进行加速。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip <span class="token function">install</span> onnxruntime<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果你想使用GPU运行，请安装onnxruntime-gpu</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip <span class="token function">install</span> onnxruntime-gpu<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>示例测试test.py代码</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> cv2
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> insightface
+<span class="token keyword">from</span> insightface<span class="token punctuation">.</span>app <span class="token keyword">import</span> FaceAnalysis
+<span class="token keyword">from</span> insightface<span class="token punctuation">.</span>data <span class="token keyword">import</span> get_image <span class="token keyword">as</span> ins_get_image
+
+app <span class="token operator">=</span> FaceAnalysis<span class="token punctuation">(</span>providers<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'CUDAExecutionProvider'</span><span class="token punctuation">,</span> <span class="token string">'CPUExecutionProvider'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>prepare<span class="token punctuation">(</span>ctx_id<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> det_size<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">640</span><span class="token punctuation">,</span> <span class="token number">640</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># img = ins_get_image('t1')</span>
+img <span class="token operator">=</span> cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span><span class="token string">'./database/Sheldon.png'</span><span class="token punctuation">)</span>
+faces <span class="token operator">=</span> app<span class="token punctuation">.</span>get<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+<span class="token comment"># print(faces[0].normed_embedding)</span>
+rimg <span class="token operator">=</span> app<span class="token punctuation">.</span>draw_on<span class="token punctuation">(</span>img<span class="token punctuation">,</span> faces<span class="token punctuation">)</span>
+cv2<span class="token punctuation">.</span>imwrite<span class="token punctuation">(</span><span class="token string">"./t1_output.jpg"</span><span class="token punctuation">,</span> rimg<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>需要在运行目录创建database文件夹，并放入一张包含自己面部自拍测试图片。</strong></p>
+<p>运行代码</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">python3 test.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>第一次运行时，代码会自动下载buffalo_l的模型，关于buffalo_l的模型和其他相关模型的介绍，可以查看<a href="python-package">quick start</a>。</p>
+<p>运行结果如下图，左侧是原始图片，右侧是运行结果，会框选出人脸，并进行关键点定位，还显示预估年龄。</p>
+<div style="display: flex; justify-content: space-between;">
+    <img src="Sheldon.png" alt="Sheldon" style="width: 49%;">
+    <img src="t1_output.jpg" alt="t1_output" style="width: 49%;">
+</div>
+
+
+<h3 id="2-4-构建人脸识别系统"><a href="#2-4-构建人脸识别系统" class="headerlink" title="2.4 构建人脸识别系统"></a>2.4 构建人脸识别系统</h3><p>上面只是运行了调用了一个人脸检测的模型，一个完整的人脸识别系统的运行流程应该如下图所示。</p>
+<p><img src="/JunyongCHEN/2025/05/23/RK3588s-NPU%E8%B5%8B%E8%83%BD%EF%BC%9A%E6%9E%84%E5%BB%BA%E9%AB%98%E6%95%88%E5%9B%BE%E7%89%87%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/running_flow.png" alt="人脸识别系统流程图"></p>
+<p>简单的说就是需要先构建应该已知人脸的数据库，在监测时和数据库的人脸进行比对，然后进行余弦相似度的计算，在大于阈值的情况下给出相似度最大的人脸。</p>
+<h4 id="2-4-1-获取数据库人脸"><a href="#2-4-1-获取数据库人脸" class="headerlink" title="2.4.1 获取数据库人脸"></a>2.4.1 获取数据库人脸</h4><p>该函数会从指定文件夹读取所有的照片，<strong>默认每张照片只有一个人脸</strong>，该人脸的文件名是该人脸的名字。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">load_faces_from_folder</span><span class="token punctuation">(</span>folder<span class="token punctuation">,</span> app<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    features <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    file_names <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    faces_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> filename <span class="token keyword">in</span> os<span class="token punctuation">.</span>listdir<span class="token punctuation">(</span>folder<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> filename<span class="token punctuation">.</span>endswith<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">".png"</span><span class="token punctuation">,</span> <span class="token string">".jpg"</span><span class="token punctuation">,</span> <span class="token string">".jpeg"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            path <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>folder<span class="token punctuation">,</span> filename<span class="token punctuation">)</span>
+            img <span class="token operator">=</span> cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>path<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> img <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+                faces <span class="token operator">=</span> app<span class="token punctuation">.</span>get<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+                <span class="token keyword">if</span> faces<span class="token punctuation">:</span>
+                    feat <span class="token operator">=</span> faces<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>normed_embedding  <span class="token comment"># 假设每张图片中只有一张人脸</span>
+                    features<span class="token punctuation">.</span>append<span class="token punctuation">(</span>feat<span class="token punctuation">)</span>
+                    file_names<span class="token punctuation">.</span>append<span class="token punctuation">(</span>filename<span class="token punctuation">)</span>
+                    faces_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>faces<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>features<span class="token punctuation">,</span> dtype<span class="token operator">=</span>np<span class="token punctuation">.</span>float32<span class="token punctuation">)</span><span class="token punctuation">,</span> file_names<span class="token punctuation">,</span> faces_list<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="2-4-2-相似度计算函数"><a href="#2-4-2-相似度计算函数" class="headerlink" title="2.4.2 相似度计算函数"></a>2.4.2 相似度计算函数</h4><p>传入要识别人脸的图像（可以包含不止一个图像），已知的人脸数据库和人脸名字。该函数会将图像的每一个人脸和数据库的每一个人脸进行比对，给出结果。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">find_similar_faces</span><span class="token punctuation">(</span>target_img<span class="token punctuation">,</span> database_features<span class="token punctuation">,</span> database_filenames<span class="token punctuation">,</span> app<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 读取图像获取所有人脸信息</span>
+    target_faces <span class="token operator">=</span> app<span class="token punctuation">.</span>get<span class="token punctuation">(</span>target_img<span class="token punctuation">)</span>
+    
+    <span class="token comment"># 将数据库的每一个人脸和待检测的图像人脸进行匹配</span>
+    <span class="token keyword">for</span> i<span class="token punctuation">,</span> face <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>target_faces<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        face<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"unknown"</span>  <span class="token comment"># 默认设置为unknown</span>
+        target_feat <span class="token operator">=</span> face<span class="token punctuation">.</span>normed_embedding
+        
+        <span class="token comment"># 与数据库中的每个人脸进行比对</span>
+        <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>database_features<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            sim <span class="token operator">=</span> np<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>target_feat<span class="token punctuation">,</span> database_features<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> sim <span class="token operator">></span> similarity_threshold<span class="token punctuation">:</span>
+                face<span class="token punctuation">.</span>name <span class="token operator">=</span> database_filenames<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+                <span class="token keyword">break</span>
+    
+    <span class="token keyword">return</span> target_faces  <span class="token comment"># 返回所有检测到的人脸</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="2-4-3-完整识别单张图片的代码"><a href="#2-4-3-完整识别单张图片的代码" class="headerlink" title="2.4.3 完整识别单张图片的代码"></a>2.4.3 完整识别单张图片的代码</h4><p>在数据库database放入Sheldon图像，在运行代码的当前目录放入待识别的图像，命名为family.jpg。图像如下所示：</p>
+<div style="display: flex; justify-content: space-between;">
+    <img src="Sheldon.png" alt="Sheldon" width="400">
+    <img src="family.jpg" alt="family" width="800">
+</div>
+该代码命名为`detect_single.py`
+
+
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> os
+<span class="token keyword">import</span> cv2
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">from</span> insightface<span class="token punctuation">.</span>app <span class="token keyword">import</span> FaceAnalysis
+
+<span class="token keyword">def</span> <span class="token function">load_faces_from_folder</span><span class="token punctuation">(</span>folder<span class="token punctuation">,</span> app<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    features <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    file_names <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    faces_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> filename <span class="token keyword">in</span> os<span class="token punctuation">.</span>listdir<span class="token punctuation">(</span>folder<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> filename<span class="token punctuation">.</span>endswith<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">".png"</span><span class="token punctuation">,</span> <span class="token string">".jpg"</span><span class="token punctuation">,</span> <span class="token string">".jpeg"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            path <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>folder<span class="token punctuation">,</span> filename<span class="token punctuation">)</span>
+            img <span class="token operator">=</span> cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>path<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> img <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+                faces <span class="token operator">=</span> app<span class="token punctuation">.</span>get<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+                <span class="token keyword">if</span> faces<span class="token punctuation">:</span>
+                    feat <span class="token operator">=</span> faces<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>normed_embedding  <span class="token comment"># 假设每张图片中只有一张人脸</span>
+                    features<span class="token punctuation">.</span>append<span class="token punctuation">(</span>feat<span class="token punctuation">)</span>
+                    file_names<span class="token punctuation">.</span>append<span class="token punctuation">(</span>filename<span class="token punctuation">)</span>
+                    faces_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>faces<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>features<span class="token punctuation">,</span> dtype<span class="token operator">=</span>np<span class="token punctuation">.</span>float32<span class="token punctuation">)</span><span class="token punctuation">,</span> file_names<span class="token punctuation">,</span> faces_list
+
+<span class="token keyword">def</span> <span class="token function">find_similar_faces</span><span class="token punctuation">(</span>target_img<span class="token punctuation">,</span> database_features<span class="token punctuation">,</span> database_filenames<span class="token punctuation">,</span> app<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 读取图像获取所有人脸信息</span>
+    target_faces <span class="token operator">=</span> app<span class="token punctuation">.</span>get<span class="token punctuation">(</span>target_img<span class="token punctuation">)</span>
+    
+    <span class="token comment"># 将数据库的每一个人脸和待检测的图像人脸进行匹配</span>
+    <span class="token keyword">for</span> i<span class="token punctuation">,</span> face <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>target_faces<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        face<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"unknown"</span>  <span class="token comment"># 默认设置为unknown</span>
+        target_feat <span class="token operator">=</span> face<span class="token punctuation">.</span>normed_embedding
+        
+        <span class="token comment"># 与数据库中的每个人脸进行比对</span>
+        <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>database_features<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            sim <span class="token operator">=</span> np<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>target_feat<span class="token punctuation">,</span> database_features<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> sim <span class="token operator">></span> similarity_threshold<span class="token punctuation">:</span>
+                face<span class="token punctuation">.</span>name <span class="token operator">=</span> database_filenames<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+                <span class="token keyword">break</span>
+    
+    <span class="token keyword">return</span> target_faces  <span class="token comment"># 返回所有检测到的人脸</span>
+
+<span class="token keyword">def</span> <span class="token function">draw_on</span><span class="token punctuation">(</span>img<span class="token punctuation">,</span> faces<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">import</span> cv2
+    dimg <span class="token operator">=</span> img<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>faces<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        face <span class="token operator">=</span> faces<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        box <span class="token operator">=</span> face<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>astype<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+        color <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span>
+        cv2<span class="token punctuation">.</span>rectangle<span class="token punctuation">(</span>dimg<span class="token punctuation">,</span> <span class="token punctuation">(</span>box<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> box<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>box<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> box<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> color<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> face<span class="token punctuation">.</span>kps <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            kps <span class="token operator">=</span> face<span class="token punctuation">.</span>kps<span class="token punctuation">.</span>astype<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+            <span class="token keyword">for</span> l <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>kps<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                color <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span>
+                <span class="token keyword">if</span> l <span class="token operator">==</span> <span class="token number">0</span> <span class="token keyword">or</span> l <span class="token operator">==</span> <span class="token number">3</span><span class="token punctuation">:</span>
+                    color <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+                cv2<span class="token punctuation">.</span>circle<span class="token punctuation">(</span>dimg<span class="token punctuation">,</span> <span class="token punctuation">(</span>kps<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> kps<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> color<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token comment"># if face.gender is not None and face.age is not None:</span>
+        <span class="token comment">#     cv2.putText(dimg,'%s,%d'%(face.sex,face.age), (box[0]-1, box[1]-4),cv2.FONT_HERSHEY_COMPLEX,0.7,(0,255,0),1)</span>
+
+        <span class="token comment"># 显示人脸名称（known或unknown）</span>
+        cv2<span class="token punctuation">.</span>putText<span class="token punctuation">(</span>dimg<span class="token punctuation">,</span><span class="token string">'%s'</span><span class="token operator">%</span><span class="token punctuation">(</span>face<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>box<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> box<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>cv2<span class="token punctuation">.</span>FONT_HERSHEY_COMPLEX<span class="token punctuation">,</span><span class="token number">0.5</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">,</span><span class="token number">255</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> dimg
+
+app <span class="token operator">=</span> FaceAnalysis<span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">'buffalo_l'</span><span class="token punctuation">)</span>  <span class="token comment"># 使用的检测模型名为buffalo_l</span>
+app<span class="token punctuation">.</span>prepare<span class="token punctuation">(</span>ctx_id<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> det_size<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">640</span><span class="token punctuation">,</span> <span class="token number">640</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment"># ctx_id小于0表示用cpu预测，det_size表示resize后的图片分辨率</span>
+
+img <span class="token operator">=</span> cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span><span class="token string">"family.jpg"</span><span class="token punctuation">)</span>  <span class="token comment"># 读取图片</span>
+
+<span class="token comment"># 设置相似度阈值</span>
+similarity_threshold <span class="token operator">=</span> <span class="token number">0.3</span>  <span class="token comment"># 设定阈值，根据实际情况调整</span>
+
+<span class="token comment"># 提取数据库人脸向量</span>
+database_folder <span class="token operator">=</span> <span class="token string">"database"</span>
+database_features<span class="token punctuation">,</span> database_filenames<span class="token punctuation">,</span> database_faces <span class="token operator">=</span> load_faces_from_folder<span class="token punctuation">(</span>database_folder<span class="token punctuation">,</span> app<span class="token punctuation">)</span>
+
+<span class="token comment"># 从图像中找到数据库里匹配的人脸索引</span>
+target_img_path <span class="token operator">=</span> <span class="token string">"family.jpg"</span>
+similar_faces <span class="token operator">=</span> find_similar_faces<span class="token punctuation">(</span>img<span class="token punctuation">,</span> database_features<span class="token punctuation">,</span> database_filenames<span class="token punctuation">,</span> app<span class="token punctuation">)</span>
+
+<span class="token comment"># 标记相似度高于阈值的人脸</span>
+rimg <span class="token operator">=</span> draw_on<span class="token punctuation">(</span>img<span class="token punctuation">,</span> similar_faces<span class="token punctuation">)</span>  <span class="token comment"># 将人脸框绘制到图片上</span>
+cv2<span class="token punctuation">.</span>imwrite<span class="token punctuation">(</span><span class="token string">"multi_people_output_target.jpg"</span><span class="token punctuation">,</span> rimg<span class="token punctuation">)</span>  <span class="token comment"># 保存图片</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>运行结果如下图，可以看到Sheldon的人脸被很好的识别出来，同时五个关键点也被标记。</p>
+<p><img src="/JunyongCHEN/2025/05/23/RK3588s-NPU%E8%B5%8B%E8%83%BD%EF%BC%9A%E6%9E%84%E5%BB%BA%E9%AB%98%E6%95%88%E5%9B%BE%E7%89%87%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/multi_people_output_target.jpg" alt="multi_people_output_target"></p>
+<p>至此，一个基本的人脸识别系统的雏形在PC上就完成了。</p>
+<h2 id="3-RK3588s-NPU-移植部署"><a href="#3-RK3588s-NPU-移植部署" class="headerlink" title="3 RK3588s NPU 移植部署"></a>3 RK3588s NPU 移植部署</h2><h3 id="3-1-PC环境配置"><a href="#3-1-PC环境配置" class="headerlink" title="3.1 PC环境配置"></a>3.1 PC环境配置</h3><p>在进行NPU部署之前，需要在PC上进行环境配置。PC的主要任务是进行模型的训练和将模型转换为RKNN格式，而RK3588s则负责调用RKNN模型进行推理。在本教程中，我们将直接使用insightface的onnx模型进行量化，无需进行训练步骤。</p>
+<p>首先，参考野火官方文档<a href="rknn.html">RKNN-Toolkit2 使用文档</a>进行PC环境的配置。我们使用的WSL版本是Ubuntu 20.04。</p>
+<p><strong>步骤1：安装相关库和软件包</strong></p>
+<p>在终端中执行以下命令安装必要的库和软件包：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> libxslt1-dev zlib1g-dev libglib2.0 libsm6 libgl1-mesa-glx libprotobuf-dev gcc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>步骤2：安装RKNN-Toolkit2</strong></p>
+<p>使用pip安装RKNN-Toolkit2工具包：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip <span class="token function">install</span> rknn-toolkit2 -i https://pypi.org/simple<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>步骤3：验证安装</strong></p>
+<p>进入Python交互模式，导入RKNN类以验证安装是否成功：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">python3
+<span class="token keyword">from</span> rknn<span class="token punctuation">.</span>api <span class="token keyword">import</span> RKNN<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>如果没有任何报错信息，则说明安装成功。</p>
+<p>以上步骤完成后，PC环境配置即告完成，接下来可以进行模型的转换和部署工作。</p>
+<h3 id="3-2-端侧部署思路"><a href="#3-2-端侧部署思路" class="headerlink" title="3.2 端侧部署思路"></a>3.2 端侧部署思路</h3><p>NPU的移植并不是简单的将模型转成进行替换就完事了，配套的前处理后处理的代码都需要迁移过来。现在的问题是怎么把<code>detect_single.py</code>放到RK3588上面并且在NPU上运行模型。观察<code>detect_single.py</code>的代码可以知道，对于普通人来说insightface用起来是很方便，但也由于insightface的集成度高，相应的前处理和后处理代码都封装到了python库里面。对于这个移植问题有两个思路，第一个整体上继续使用insightface这个库的框架，但是在调用人脸检测和识别的onnx模型时，将其替换为调用RKNN模型的代码；第二个方案是抽丝剥茧的方式，将在使用insightface这个库过程中用到的代码剥离出来，独立调用。当时我使用的是第二个方案，当时主要是想通过了解运行过程深入的理解一下模型的思路。现在回过头来看这也是一个正确的选择，和开始说的一样，这不是一个简单的模型替换的工作，rknn的使用逻辑和框架和onnx在某些细节上还是有很大的区别的，也正因为是这个区别，当时差点导致这个系统凉凉做不出来，好在当时和学长交流时灵光一现，想到了问题所在。由于对insightface抽丝剥茧的过程十分琐碎，这篇博客将不介绍具体的分析过程，直接给出转换代码和运行代码，后续再单独出一篇博客介绍这个分析过程。</p>
+<h3 id="3-3-调整SCRFD-onnx模型"><a href="#3-3-调整SCRFD-onnx模型" class="headerlink" title="3.3 调整SCRFD onnx模型"></a>3.3 调整SCRFD onnx模型</h3><p>在2.3中提到，首次运行时代码会自动下载buffalo_l模型。通过分析代码可以得知，模型的默认下载路径为<code>~/.insightface/models/buffalo_l</code>。下图展示了下载的5个模型文件，分别是：1k3d68.onnx、2d106det.onnx、det_10g.onnx、genderage.onnx、w600k_r50.onnx。</p>
+<p><img src="/JunyongCHEN/2025/05/23/RK3588s-NPU%E8%B5%8B%E8%83%BD%EF%BC%9A%E6%9E%84%E5%BB%BA%E9%AB%98%E6%95%88%E5%9B%BE%E7%89%87%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/model-path.png" alt="模型路径和文件"></p>
+<p>结合在官方仓库对<a href="python-package">模型的介绍(Model Zoo)</a>可以猜出来，<code>1k3d68.onnx</code>是用于人脸检测的模型，<code>2d106det.onnx</code>是人脸对齐（Alignment）的模型，<code>det_10g.onnx</code>是用于人脸检测的模型，genderage.onnx是用于性别年龄预测的模型，<code>w600k_r50.onnx</code>是用于人脸识别的模型。Model Zoo的介绍表格如下图所示。</p>
+<p><img src="/JunyongCHEN/2025/05/23/RK3588s-NPU%E8%B5%8B%E8%83%BD%EF%BC%9A%E6%9E%84%E5%BB%BA%E9%AB%98%E6%95%88%E5%9B%BE%E7%89%87%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/Model-Zoo.png" alt="Model-Zoo"></p>
+<p>因此需要量化的人脸检测模型是<code>det_10g.onnx</code>，检测和识别的量化过程都如下图所示，第一步pt转onnx模型insightface已经帮我们做了，insightface本身使用的就是onnx模型。由于不是所有的onnx模型都能直接转成rknn的，所以我们需要对onnx再进行一次转换操作，转成可以被转成rknn的onnx版本。在这一步主要的操作是规定输入和输出，并设置输入和输出的大小，并设置输入和输出的名称，还有设置onnx算子的版本。</p>
+<p><img src="/JunyongCHEN/2025/05/23/RK3588s-NPU%E8%B5%8B%E8%83%BD%EF%BC%9A%E6%9E%84%E5%BB%BA%E9%AB%98%E6%95%88%E5%9B%BE%E7%89%87%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/transfer-flow.png" alt="transfer-flow"></p>
+<p>我们首先可以使用下面的check_info.py代码看一下目前onnx模型的信息。需要将det_10g.onnx放到代码运行目录。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> onnx
+
+<span class="token comment"># 加载模型</span>
+model <span class="token operator">=</span> onnx<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">'det_10g.onnx'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 打印模型整体的 opset_version</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Model's ONNX Opset Version:"</span><span class="token punctuation">)</span>
+<span class="token comment"># model.opset_import 是一个列表，通常只有一个元素</span>
+<span class="token keyword">for</span> opset <span class="token keyword">in</span> model<span class="token punctuation">.</span>opset_import<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"  Domain: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>opset<span class="token punctuation">.</span>domain <span class="token keyword">if</span> opset<span class="token punctuation">.</span>domain <span class="token keyword">else</span> <span class="token string">'ai.onnx'</span><span class="token punctuation">&#125;</span></span><span class="token string">, Version: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>opset<span class="token punctuation">.</span>version<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nThe model expects input(s):"</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> <span class="token builtin">input</span> <span class="token keyword">in</span> model<span class="token punctuation">.</span>graph<span class="token punctuation">.</span><span class="token builtin">input</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">.</span>name<span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">': '</span><span class="token punctuation">)</span>
+    <span class="token comment"># 获取形状和数据类型</span>
+    shape <span class="token operator">=</span> <span class="token punctuation">[</span>dim<span class="token punctuation">.</span>dim_value <span class="token keyword">for</span> dim <span class="token keyword">in</span> <span class="token builtin">input</span><span class="token punctuation">.</span><span class="token builtin">type</span><span class="token punctuation">.</span>tensor_type<span class="token punctuation">.</span>shape<span class="token punctuation">.</span>dim<span class="token punctuation">]</span>
+    <span class="token comment"># 如果维度是动态的，可能显示为0或空</span>
+    shape_str <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token keyword">if</span> s <span class="token operator">!=</span> <span class="token number">0</span> <span class="token keyword">else</span> <span class="token string">'?'</span> <span class="token keyword">for</span> s <span class="token keyword">in</span> shape<span class="token punctuation">]</span>
+    data_type <span class="token operator">=</span> <span class="token builtin">input</span><span class="token punctuation">.</span><span class="token builtin">type</span><span class="token punctuation">.</span>tensor_type<span class="token punctuation">.</span>elem_type
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Shape: [</span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token string">', '</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>shape_str<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">] Type: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>onnx<span class="token punctuation">.</span>TensorProto<span class="token punctuation">.</span>DataType<span class="token punctuation">.</span>Name<span class="token punctuation">(</span>data_type<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nThe model has output(s):"</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> output <span class="token keyword">in</span> model<span class="token punctuation">.</span>graph<span class="token punctuation">.</span>output<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>output<span class="token punctuation">.</span>name<span class="token punctuation">,</span> end<span class="token operator">=</span><span class="token string">': '</span><span class="token punctuation">)</span>
+    shape <span class="token operator">=</span> <span class="token punctuation">[</span>dim<span class="token punctuation">.</span>dim_value <span class="token keyword">for</span> dim <span class="token keyword">in</span> output<span class="token punctuation">.</span><span class="token builtin">type</span><span class="token punctuation">.</span>tensor_type<span class="token punctuation">.</span>shape<span class="token punctuation">.</span>dim<span class="token punctuation">]</span>
+    shape_str <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token keyword">if</span> s <span class="token operator">!=</span> <span class="token number">0</span> <span class="token keyword">else</span> <span class="token string">'?'</span> <span class="token keyword">for</span> s <span class="token keyword">in</span> shape<span class="token punctuation">]</span>
+    data_type <span class="token operator">=</span> output<span class="token punctuation">.</span><span class="token builtin">type</span><span class="token punctuation">.</span>tensor_type<span class="token punctuation">.</span>elem_type
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Shape: [</span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token string">', '</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>shape_str<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">] Type: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>onnx<span class="token punctuation">.</span>TensorProto<span class="token punctuation">.</span>DataType<span class="token punctuation">.</span>Name<span class="token punctuation">(</span>data_type<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nOperators (Nodes) in the model graph:"</span><span class="token punctuation">)</span>
+<span class="token comment"># 统计每种算子类型出现的次数</span>
+op_counts <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">for</span> node <span class="token keyword">in</span> model<span class="token punctuation">.</span>graph<span class="token punctuation">.</span>node<span class="token punctuation">:</span>
+    op_type <span class="token operator">=</span> node<span class="token punctuation">.</span>op_type
+    op_counts<span class="token punctuation">[</span>op_type<span class="token punctuation">]</span> <span class="token operator">=</span> op_counts<span class="token punctuation">.</span>get<span class="token punctuation">(</span>op_type<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token comment"># 如果你想打印每个算子的名称和类型</span>
+    <span class="token comment"># print(f"  Node Name: &#123;node.name&#125;, Op Type: &#123;node.op_type&#125;")</span>
+
+<span class="token comment"># 打印算子类型及其计数</span>
+<span class="token keyword">for</span> op_type<span class="token punctuation">,</span> count <span class="token keyword">in</span> <span class="token builtin">sorted</span><span class="token punctuation">(</span>op_counts<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"  Op Type: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>op_type<span class="token punctuation">&#125;</span></span><span class="token string">, Count: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>count<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>运行结果如下所示，可以看到算子的版本是11，模型的输入不是固定的。RKNN要求的onnx算子版本是12，同时RKNN模型不能接受动态输入，需要手动设置一个静态输入进行固定。</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">Model's ONNX Opset Version<span class="token operator">:</span>
+  <span class="token property">Domain:</span> ai<span class="token punctuation">.</span>onnx<span class="token punctuation">,</span> Version<span class="token operator">:</span> <span class="token number">11</span>
+
+The model expects input<span class="token operator">(</span>s<span class="token operator">)</span><span class="token operator">:</span>
+<span class="token property">input.1:</span> <span class="token property">Shape:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token operator">?</span><span class="token punctuation">,</span> <span class="token operator">?</span><span class="token punctuation">]</span> <span class="token property">Type:</span> FLOAT
+
+The model has output<span class="token operator">(</span>s<span class="token operator">)</span><span class="token operator">:</span>
+<span class="token number">448</span><span class="token operator">:</span> Shape<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">12800</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token property">Type:</span> FLOAT
+<span class="token number">471</span><span class="token operator">:</span> Shape<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">3200</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token property">Type:</span> FLOAT
+<span class="token number">494</span><span class="token operator">:</span> Shape<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">800</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token property">Type:</span> FLOAT
+<span class="token number">451</span><span class="token operator">:</span> Shape<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">12800</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span> <span class="token property">Type:</span> FLOAT
+<span class="token number">474</span><span class="token operator">:</span> Shape<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">3200</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span> <span class="token property">Type:</span> FLOAT
+<span class="token number">497</span><span class="token operator">:</span> Shape<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">800</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span> <span class="token property">Type:</span> FLOAT
+<span class="token number">454</span><span class="token operator">:</span> Shape<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">12800</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">]</span> <span class="token property">Type:</span> FLOAT
+<span class="token number">477</span><span class="token operator">:</span> Shape<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">3200</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">]</span> <span class="token property">Type:</span> FLOAT
+<span class="token number">500</span><span class="token operator">:</span> Shape<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">800</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">]</span> <span class="token property">Type:</span> FLOAT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>因此需要调用这个<code>change_det_onnx.py</code>的代码，将onnx的算子版本改为12，同时固定输入的大小为[1，3，640，640]，将修改后的模型保存为<code>det_10g_rk.onnx</code></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> onnx
+<span class="token keyword">from</span> onnx <span class="token keyword">import</span> helper<span class="token punctuation">,</span> TensorProto
+
+<span class="token comment"># 加载 ONNX 模型</span>
+model <span class="token operator">=</span> onnx<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">"det_10g.onnx"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 修改模型输入尺寸</span>
+input_tensor <span class="token operator">=</span> model<span class="token punctuation">.</span>graph<span class="token punctuation">.</span><span class="token builtin">input</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+input_tensor_type <span class="token operator">=</span> input_tensor<span class="token punctuation">.</span><span class="token builtin">type</span><span class="token punctuation">.</span>tensor_type
+input_tensor_type<span class="token punctuation">.</span>shape<span class="token punctuation">.</span>dim<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>dim_value <span class="token operator">=</span> <span class="token number">1</span>  <span class="token comment"># 例如，更改 batch size 为 1</span>
+input_tensor_type<span class="token punctuation">.</span>shape<span class="token punctuation">.</span>dim<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>dim_value <span class="token operator">=</span> <span class="token number">640</span>  <span class="token comment"># 例如，更改高度为 640</span>
+input_tensor_type<span class="token punctuation">.</span>shape<span class="token punctuation">.</span>dim<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span>dim_value <span class="token operator">=</span> <span class="token number">640</span>  <span class="token comment"># 例如，更改宽度为 640</span>
+
+<span class="token comment"># 如果需要更改 opset version</span>
+model<span class="token punctuation">.</span>opset_import<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>version <span class="token operator">=</span> <span class="token number">12</span>  <span class="token comment"># 更改到新的 opset 版本</span>
+
+<span class="token comment"># 保存修改后的模型</span>
+onnx<span class="token punctuation">.</span>save<span class="token punctuation">(</span>model<span class="token punctuation">,</span> <span class="token string">"det_10g_rk.onnx"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h3 id="3-4-调整ArcFace-onnx模型"><a href="#3-4-调整ArcFace-onnx模型" class="headerlink" title="3.4 调整ArcFace onnx模型"></a>3.4 调整ArcFace onnx模型</h3><p>同样的思路，调用下面change_rec_onnx.py对人脸识别模型w600k_r50.onnx进行处理。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> onnx
+<span class="token keyword">from</span> onnx <span class="token keyword">import</span> helper<span class="token punctuation">,</span> TensorProto
+
+<span class="token comment"># 加载 ONNX 模型</span>
+model <span class="token operator">=</span> onnx<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">"w600k_r50.onnx"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 修改模型输入尺寸</span>
+input_tensor <span class="token operator">=</span> model<span class="token punctuation">.</span>graph<span class="token punctuation">.</span><span class="token builtin">input</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+input_tensor_type <span class="token operator">=</span> input_tensor<span class="token punctuation">.</span><span class="token builtin">type</span><span class="token punctuation">.</span>tensor_type
+input_tensor_type<span class="token punctuation">.</span>shape<span class="token punctuation">.</span>dim<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>dim_value <span class="token operator">=</span> <span class="token number">1</span>  <span class="token comment"># 例如，更改 batch size 为 1</span>
+input_tensor_type<span class="token punctuation">.</span>shape<span class="token punctuation">.</span>dim<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>dim_value <span class="token operator">=</span> <span class="token number">112</span>  <span class="token comment"># 例如，更改高度为 640</span>
+input_tensor_type<span class="token punctuation">.</span>shape<span class="token punctuation">.</span>dim<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span>dim_value <span class="token operator">=</span> <span class="token number">112</span>  <span class="token comment"># 例如，更改宽度为 640</span>
+
+<span class="token comment"># 如果需要更改 opset version</span>
+model<span class="token punctuation">.</span>opset_import<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>version <span class="token operator">=</span> <span class="token number">12</span>  <span class="token comment"># 更改到新的 opset 版本</span>
+
+<span class="token comment"># 保存修改后的模型</span>
+onnx<span class="token punctuation">.</span>save<span class="token punctuation">(</span>model<span class="token punctuation">,</span> <span class="token string">"w600k_r50_rk.onnx"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="3-5-量化模型"><a href="#3-5-量化模型" class="headerlink" title="3.5 量化模型"></a>3.5 量化模型</h3><p>量化模型就是将onnx模型转为rknn模型。除了将模型转为rknn外，我们还可以在PC上模拟调用rknn模型，去查看rknn模型的是否能正常运行，以及前处理和后处理的步骤是否正确。这里其实就是这个系统部署在NPU上工作量最大的一步，主要工作也是去分析insightface库的运行机制，这部分的分析工作后续单独开一篇博客介绍，这里直接给出最终实现的onnx2rknn.py代码。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> os
+<span class="token keyword">import</span> sys
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> cv2
+<span class="token keyword">from</span> rknn<span class="token punctuation">.</span>api <span class="token keyword">import</span> RKNN
+<span class="token keyword">from</span> skimage <span class="token keyword">import</span> transform <span class="token keyword">as</span> trans
+<span class="token keyword">from</span> numpy<span class="token punctuation">.</span>linalg <span class="token keyword">import</span> norm <span class="token keyword">as</span> l2norm
+
+<span class="token keyword">class</span> <span class="token class-name">Face</span><span class="token punctuation">(</span><span class="token builtin">dict</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> d<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> d <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            d <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        <span class="token keyword">if</span> kwargs<span class="token punctuation">:</span>
+            d<span class="token punctuation">.</span>update<span class="token punctuation">(</span><span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+        <span class="token keyword">for</span> k<span class="token punctuation">,</span> v <span class="token keyword">in</span> d<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token builtin">setattr</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> k<span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+        <span class="token comment"># Class attributes</span>
+        <span class="token comment">#for k in self.__class__.__dict__.keys():</span>
+        <span class="token comment">#    if not (k.startswith('__') and k.endswith('__')) and not k in ('update', 'pop'):</span>
+        <span class="token comment">#        setattr(self, k, getattr(self, k))</span>
+
+    <span class="token keyword">def</span> <span class="token function">__setattr__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> name<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">,</span> <span class="token builtin">tuple</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            value <span class="token operator">=</span> <span class="token punctuation">[</span>self<span class="token punctuation">.</span>__class__<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+                    <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token builtin">dict</span><span class="token punctuation">)</span> <span class="token keyword">else</span> x <span class="token keyword">for</span> x <span class="token keyword">in</span> value<span class="token punctuation">]</span>
+        <span class="token keyword">elif</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> <span class="token builtin">dict</span><span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token keyword">not</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> self<span class="token punctuation">.</span>__class__<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            value <span class="token operator">=</span> self<span class="token punctuation">.</span>__class__<span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>Face<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__setattr__<span class="token punctuation">(</span>name<span class="token punctuation">,</span> value<span class="token punctuation">)</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>Face<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__setitem__<span class="token punctuation">(</span>name<span class="token punctuation">,</span> value<span class="token punctuation">)</span>
+
+    __setitem__ <span class="token operator">=</span> __setattr__
+
+    <span class="token keyword">def</span> <span class="token function">__getattr__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> name<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">None</span>
+
+    <span class="token decorator annotation punctuation">@property</span>
+    <span class="token keyword">def</span> <span class="token function">embedding_norm</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>embedding <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">None</span>
+        <span class="token keyword">return</span> l2norm<span class="token punctuation">(</span>self<span class="token punctuation">.</span>embedding<span class="token punctuation">)</span>
+
+    <span class="token decorator annotation punctuation">@property</span> 
+    <span class="token keyword">def</span> <span class="token function">normed_embedding</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>embedding <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">None</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>embedding <span class="token operator">/</span> self<span class="token punctuation">.</span>embedding_norm
+
+<span class="token comment"># Model file paths</span>
+DET_ONNX_MODEL <span class="token operator">=</span> <span class="token string">'det_10g_rk.onnx'</span>
+DET_RKNN_MODEL <span class="token operator">=</span> <span class="token string">'det_10g.rknn'</span>
+REC_ONNX_MODEL <span class="token operator">=</span> <span class="token string">'w600k_r50_rk.onnx'</span>
+REC_RKNN_MODEL <span class="token operator">=</span> <span class="token string">'w600k_r50.rknn'</span>
+INPUT_IMAGE_PATH <span class="token operator">=</span> <span class="token string">'./family.jpg'</span>
+DATASET <span class="token operator">=</span> <span class="token string">'./dataset.txt'</span>
+
+QUANTIZE_ON <span class="token operator">=</span> <span class="token boolean">True</span>
+
+<span class="token keyword">def</span> <span class="token function">preprocess</span><span class="token punctuation">(</span>img<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    input_size <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">640</span><span class="token punctuation">,</span><span class="token number">640</span><span class="token punctuation">]</span>
+    im_ratio <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>img<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">/</span> img<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    model_ratio <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>input_size<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">/</span> input_size<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    <span class="token keyword">if</span> im_ratio<span class="token operator">></span>model_ratio<span class="token punctuation">:</span>
+        new_height <span class="token operator">=</span> input_size<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+        new_width <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>new_height <span class="token operator">/</span> im_ratio<span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        new_width <span class="token operator">=</span> input_size<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        new_height <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>new_width <span class="token operator">*</span> im_ratio<span class="token punctuation">)</span>
+    det_scale <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>new_height<span class="token punctuation">)</span> <span class="token operator">/</span> img<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    resized_img <span class="token operator">=</span> cv2<span class="token punctuation">.</span>resize<span class="token punctuation">(</span>img<span class="token punctuation">,</span> <span class="token punctuation">(</span>new_width<span class="token punctuation">,</span> new_height<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    det_img <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span> <span class="token punctuation">(</span>input_size<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> input_size<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>np<span class="token punctuation">.</span>uint8 <span class="token punctuation">)</span>
+    det_img<span class="token punctuation">[</span><span class="token punctuation">:</span>new_height<span class="token punctuation">,</span> <span class="token punctuation">:</span>new_width<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">=</span> resized_img
+    <span class="token keyword">return</span> det_img<span class="token punctuation">,</span> det_scale
+
+<span class="token keyword">def</span> <span class="token function">distance2bbox</span><span class="token punctuation">(</span>points<span class="token punctuation">,</span> distance<span class="token punctuation">,</span> max_shape<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""Decode distance prediction to bounding box.
+
+    Args:
+        points (Tensor): Shape (n, 2), [x, y].
+        distance (Tensor): Distance from the given point to 4
+            boundaries (left, top, right, bottom).
+        max_shape (tuple): Shape of the image.
+
+    Returns:
+        Tensor: Decoded bboxes.
+    """</span>
+    x1 <span class="token operator">=</span> points<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">-</span> distance<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
+    y1 <span class="token operator">=</span> points<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> distance<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
+    x2 <span class="token operator">=</span> points<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> distance<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span>
+    y2 <span class="token operator">=</span> points<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> distance<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
+    <span class="token keyword">if</span> max_shape <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        x1 <span class="token operator">=</span> x1<span class="token punctuation">.</span>clamp<span class="token punctuation">(</span><span class="token builtin">min</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token builtin">max</span><span class="token operator">=</span>max_shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        y1 <span class="token operator">=</span> y1<span class="token punctuation">.</span>clamp<span class="token punctuation">(</span><span class="token builtin">min</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token builtin">max</span><span class="token operator">=</span>max_shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        x2 <span class="token operator">=</span> x2<span class="token punctuation">.</span>clamp<span class="token punctuation">(</span><span class="token builtin">min</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token builtin">max</span><span class="token operator">=</span>max_shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        y2 <span class="token operator">=</span> y2<span class="token punctuation">.</span>clamp<span class="token punctuation">(</span><span class="token builtin">min</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token builtin">max</span><span class="token operator">=</span>max_shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> np<span class="token punctuation">.</span>stack<span class="token punctuation">(</span><span class="token punctuation">[</span>x1<span class="token punctuation">,</span> y1<span class="token punctuation">,</span> x2<span class="token punctuation">,</span> y2<span class="token punctuation">]</span><span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">distance2kps</span><span class="token punctuation">(</span>points<span class="token punctuation">,</span> distance<span class="token punctuation">,</span> max_shape<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""Decode distance prediction to bounding box.
+
+    Args:
+        points (Tensor): Shape (n, 2), [x, y].
+        distance (Tensor): Distance from the given point to 4
+            boundaries (left, top, right, bottom).
+        max_shape (tuple): Shape of the image.
+
+    Returns:
+        Tensor: Decoded bboxes.
+    """</span>
+    preds <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> distance<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        px <span class="token operator">=</span> points<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> i<span class="token operator">%</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">+</span> distance<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> i<span class="token punctuation">]</span>
+        py <span class="token operator">=</span> points<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> i<span class="token operator">%</span><span class="token number">2</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> distance<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span>
+        <span class="token keyword">if</span> max_shape <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            px <span class="token operator">=</span> px<span class="token punctuation">.</span>clamp<span class="token punctuation">(</span><span class="token builtin">min</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token builtin">max</span><span class="token operator">=</span>max_shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            py <span class="token operator">=</span> py<span class="token punctuation">.</span>clamp<span class="token punctuation">(</span><span class="token builtin">min</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token builtin">max</span><span class="token operator">=</span>max_shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        preds<span class="token punctuation">.</span>append<span class="token punctuation">(</span>px<span class="token punctuation">)</span>
+        preds<span class="token punctuation">.</span>append<span class="token punctuation">(</span>py<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> np<span class="token punctuation">.</span>stack<span class="token punctuation">(</span>preds<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">nms</span><span class="token punctuation">(</span>dets<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    nms_thresh <span class="token operator">=</span> <span class="token number">0.4</span>
+    thresh <span class="token operator">=</span> nms_thresh
+    x1 <span class="token operator">=</span> dets<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
+    y1 <span class="token operator">=</span> dets<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
+    x2 <span class="token operator">=</span> dets<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span>
+    y2 <span class="token operator">=</span> dets<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
+    scores <span class="token operator">=</span> dets<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span>
+
+    areas <span class="token operator">=</span> <span class="token punctuation">(</span>x2 <span class="token operator">-</span> x1 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>y2 <span class="token operator">-</span> y1 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    order <span class="token operator">=</span> scores<span class="token punctuation">.</span>argsort<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+
+    keep <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">while</span> order<span class="token punctuation">.</span>size <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">:</span>
+        i <span class="token operator">=</span> order<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        keep<span class="token punctuation">.</span>append<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+        xx1 <span class="token operator">=</span> np<span class="token punctuation">.</span>maximum<span class="token punctuation">(</span>x1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> x1<span class="token punctuation">[</span>order<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        yy1 <span class="token operator">=</span> np<span class="token punctuation">.</span>maximum<span class="token punctuation">(</span>y1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> y1<span class="token punctuation">[</span>order<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        xx2 <span class="token operator">=</span> np<span class="token punctuation">.</span>minimum<span class="token punctuation">(</span>x2<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> x2<span class="token punctuation">[</span>order<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        yy2 <span class="token operator">=</span> np<span class="token punctuation">.</span>minimum<span class="token punctuation">(</span>y2<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> y2<span class="token punctuation">[</span>order<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+        w <span class="token operator">=</span> np<span class="token punctuation">.</span>maximum<span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">,</span> xx2 <span class="token operator">-</span> xx1 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        h <span class="token operator">=</span> np<span class="token punctuation">.</span>maximum<span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">,</span> yy2 <span class="token operator">-</span> yy1 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        inter <span class="token operator">=</span> w <span class="token operator">*</span> h
+        ovr <span class="token operator">=</span> inter <span class="token operator">/</span> <span class="token punctuation">(</span>areas<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> areas<span class="token punctuation">[</span>order<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">-</span> inter<span class="token punctuation">)</span>
+
+        inds <span class="token operator">=</span> np<span class="token punctuation">.</span>where<span class="token punctuation">(</span>ovr <span class="token operator">&lt;=</span> thresh<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        order <span class="token operator">=</span> order<span class="token punctuation">[</span>inds <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">return</span> keep
+
+<span class="token keyword">def</span> <span class="token function">draw_on</span><span class="token punctuation">(</span>img<span class="token punctuation">,</span> faces<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    dimg <span class="token operator">=</span> img<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>faces<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        face <span class="token operator">=</span> faces<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        box <span class="token operator">=</span> face<span class="token punctuation">.</span>bbox<span class="token punctuation">.</span>astype<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+        color <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span>
+        cv2<span class="token punctuation">.</span>rectangle<span class="token punctuation">(</span>dimg<span class="token punctuation">,</span> <span class="token punctuation">(</span>box<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> box<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>box<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> box<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> color<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> face<span class="token punctuation">.</span>kps <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            kps <span class="token operator">=</span> face<span class="token punctuation">.</span>kps<span class="token punctuation">.</span>astype<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+            <span class="token keyword">for</span> l <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>kps<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                color <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span>
+                <span class="token keyword">if</span> l <span class="token operator">==</span> <span class="token number">0</span> <span class="token keyword">or</span> l <span class="token operator">==</span> <span class="token number">3</span><span class="token punctuation">:</span>
+                    color <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+                cv2<span class="token punctuation">.</span>circle<span class="token punctuation">(</span>dimg<span class="token punctuation">,</span> <span class="token punctuation">(</span>kps<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> kps<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> color<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> face<span class="token punctuation">.</span>name <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            cv2<span class="token punctuation">.</span>putText<span class="token punctuation">(</span>dimg<span class="token punctuation">,</span><span class="token string">'%s'</span><span class="token operator">%</span><span class="token punctuation">(</span>face<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>box<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> box<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>cv2<span class="token punctuation">.</span>FONT_HERSHEY_COMPLEX<span class="token punctuation">,</span><span class="token number">0.7</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">255</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> dimg
+
+<span class="token keyword">def</span> <span class="token function">retinaface_post_process</span><span class="token punctuation">(</span>net_outs<span class="token punctuation">,</span> det_scale<span class="token operator">=</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    处理人脸检测网络的输出
+    
+    Args:
+        net_outs: 网络输出
+        det_scale: 检测缩放比例
+    
+    Returns:
+        det_boxes: 检测到的人脸框
+        kpss: 人脸关键点
+    """</span>
+    input_height <span class="token operator">=</span> <span class="token number">640</span>
+    input_width <span class="token operator">=</span> <span class="token number">640</span>
+    fmc <span class="token operator">=</span> <span class="token number">3</span>
+    _feat_stride_fpn <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">]</span>
+    _num_anchors <span class="token operator">=</span> <span class="token number">2</span>
+    use_kps <span class="token operator">=</span> <span class="token boolean">True</span>
+    center_cache <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    det_thresh <span class="token operator">=</span> <span class="token number">0.4</span>
+    scores_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    bboxes_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    kpss_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    
+    <span class="token keyword">for</span> idx<span class="token punctuation">,</span> stride <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>_feat_stride_fpn<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        scores <span class="token operator">=</span> net_outs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span>
+        bbox_preds <span class="token operator">=</span> net_outs<span class="token punctuation">[</span>idx<span class="token operator">+</span>fmc<span class="token punctuation">]</span>
+        bbox_preds <span class="token operator">=</span> bbox_preds <span class="token operator">*</span> stride
+        <span class="token keyword">if</span> use_kps<span class="token punctuation">:</span>
+            kps_preds <span class="token operator">=</span> net_outs<span class="token punctuation">[</span>idx<span class="token operator">+</span>fmc<span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">*</span> stride
+        height <span class="token operator">=</span> input_height <span class="token operator">//</span> stride
+        width <span class="token operator">=</span> input_width <span class="token operator">//</span> stride
+        K <span class="token operator">=</span> height <span class="token operator">*</span> width
+        key <span class="token operator">=</span> <span class="token punctuation">(</span>height<span class="token punctuation">,</span> width<span class="token punctuation">,</span> stride<span class="token punctuation">)</span>
+
+        <span class="token keyword">if</span> key <span class="token keyword">in</span> center_cache<span class="token punctuation">:</span>
+            anchor_centers <span class="token operator">=</span> center_cache<span class="token punctuation">[</span>key<span class="token punctuation">]</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            anchor_centers <span class="token operator">=</span> np<span class="token punctuation">.</span>stack<span class="token punctuation">(</span>np<span class="token punctuation">.</span>mgrid<span class="token punctuation">[</span><span class="token punctuation">:</span>height<span class="token punctuation">,</span> <span class="token punctuation">:</span>width<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>astype<span class="token punctuation">(</span>np<span class="token punctuation">.</span>float32<span class="token punctuation">)</span>
+            anchor_centers <span class="token operator">=</span> <span class="token punctuation">(</span>anchor_centers <span class="token operator">*</span> stride<span class="token punctuation">)</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>
+            <span class="token keyword">if</span> _num_anchors<span class="token operator">></span><span class="token number">1</span><span class="token punctuation">:</span>
+                anchor_centers <span class="token operator">=</span> np<span class="token punctuation">.</span>stack<span class="token punctuation">(</span><span class="token punctuation">[</span>anchor_centers<span class="token punctuation">]</span><span class="token operator">*</span>_num_anchors<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>center_cache<span class="token punctuation">)</span><span class="token operator">&lt;</span><span class="token number">100</span><span class="token punctuation">:</span>
+                center_cache<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> anchor_centers
+
+        pos_inds <span class="token operator">=</span> np<span class="token punctuation">.</span>where<span class="token punctuation">(</span>scores<span class="token operator">>=</span>det_thresh<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        bboxes <span class="token operator">=</span> distance2bbox<span class="token punctuation">(</span>anchor_centers<span class="token punctuation">,</span> bbox_preds<span class="token punctuation">)</span>
+        pos_scores <span class="token operator">=</span> scores<span class="token punctuation">[</span>pos_inds<span class="token punctuation">]</span>
+        pos_bboxes <span class="token operator">=</span> bboxes<span class="token punctuation">[</span>pos_inds<span class="token punctuation">]</span>
+        scores_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>pos_scores<span class="token punctuation">)</span>
+        bboxes_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>pos_bboxes<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> use_kps<span class="token punctuation">:</span>
+            kpss <span class="token operator">=</span> distance2kps<span class="token punctuation">(</span>anchor_centers<span class="token punctuation">,</span> kps_preds<span class="token punctuation">)</span>
+            kpss <span class="token operator">=</span> kpss<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span> <span class="token punctuation">(</span>kpss<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>
+            pos_kpss <span class="token operator">=</span> kpss<span class="token punctuation">[</span>pos_inds<span class="token punctuation">]</span>
+            kpss_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>pos_kpss<span class="token punctuation">)</span>
+
+    scores <span class="token operator">=</span> np<span class="token punctuation">.</span>vstack<span class="token punctuation">(</span>scores_list<span class="token punctuation">)</span>
+    scores_ravel <span class="token operator">=</span> scores<span class="token punctuation">.</span>ravel<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    order <span class="token operator">=</span> scores_ravel<span class="token punctuation">.</span>argsort<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+    bboxes <span class="token operator">=</span> np<span class="token punctuation">.</span>vstack<span class="token punctuation">(</span>bboxes_list<span class="token punctuation">)</span> <span class="token operator">/</span> det_scale
+    <span class="token keyword">if</span> use_kps<span class="token punctuation">:</span>
+        kpss <span class="token operator">=</span> np<span class="token punctuation">.</span>vstack<span class="token punctuation">(</span>kpss_list<span class="token punctuation">)</span> <span class="token operator">/</span> det_scale
+    pre_det <span class="token operator">=</span> np<span class="token punctuation">.</span>hstack<span class="token punctuation">(</span><span class="token punctuation">(</span>bboxes<span class="token punctuation">,</span> scores<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>astype<span class="token punctuation">(</span>np<span class="token punctuation">.</span>float32<span class="token punctuation">,</span> copy<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+    pre_det <span class="token operator">=</span> pre_det<span class="token punctuation">[</span>order<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span>
+    keep <span class="token operator">=</span> nms<span class="token punctuation">(</span>pre_det<span class="token punctuation">)</span>
+    det <span class="token operator">=</span> pre_det<span class="token punctuation">[</span>keep<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span>
+    <span class="token keyword">if</span> use_kps<span class="token punctuation">:</span>
+        kpss <span class="token operator">=</span> kpss<span class="token punctuation">[</span>order<span class="token punctuation">,</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+        kpss <span class="token operator">=</span> kpss<span class="token punctuation">[</span>keep<span class="token punctuation">,</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        kpss <span class="token operator">=</span> <span class="token boolean">None</span>
+    <span class="token keyword">return</span> det<span class="token punctuation">,</span> kpss
+
+arcface_dst <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>
+    <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">38.2946</span><span class="token punctuation">,</span> <span class="token number">51.6963</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">73.5318</span><span class="token punctuation">,</span> <span class="token number">51.5014</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">56.0252</span><span class="token punctuation">,</span> <span class="token number">71.7366</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+     <span class="token punctuation">[</span><span class="token number">41.5493</span><span class="token punctuation">,</span> <span class="token number">92.3655</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">70.7299</span><span class="token punctuation">,</span> <span class="token number">92.2041</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    dtype<span class="token operator">=</span>np<span class="token punctuation">.</span>float32<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">estimate_norm</span><span class="token punctuation">(</span>lmk<span class="token punctuation">,</span> image_size<span class="token operator">=</span><span class="token number">112</span><span class="token punctuation">,</span>mode<span class="token operator">=</span><span class="token string">'arcface'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">assert</span> lmk<span class="token punctuation">.</span>shape <span class="token operator">==</span> <span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token keyword">assert</span> image_size<span class="token operator">%</span><span class="token number">112</span><span class="token operator">==</span><span class="token number">0</span> <span class="token keyword">or</span> image_size<span class="token operator">%</span><span class="token number">128</span><span class="token operator">==</span><span class="token number">0</span>
+    <span class="token keyword">if</span> image_size<span class="token operator">%</span><span class="token number">112</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">:</span>
+        ratio <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>image_size<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">112.0</span>
+        diff_x <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        ratio <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>image_size<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">128.0</span>
+        diff_x <span class="token operator">=</span> <span class="token number">8.0</span><span class="token operator">*</span>ratio
+    dst <span class="token operator">=</span> arcface_dst <span class="token operator">*</span> ratio
+    dst<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+=</span> diff_x
+    tform <span class="token operator">=</span> trans<span class="token punctuation">.</span>SimilarityTransform<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    tform<span class="token punctuation">.</span>estimate<span class="token punctuation">(</span>lmk<span class="token punctuation">,</span> dst<span class="token punctuation">)</span>
+    M <span class="token operator">=</span> tform<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> M
+
+<span class="token keyword">def</span> <span class="token function">norm_crop</span><span class="token punctuation">(</span>img<span class="token punctuation">,</span> landmark<span class="token punctuation">,</span> image_size<span class="token operator">=</span><span class="token number">112</span><span class="token punctuation">,</span> mode<span class="token operator">=</span><span class="token string">'arcface'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    M <span class="token operator">=</span> estimate_norm<span class="token punctuation">(</span>landmark<span class="token punctuation">,</span> image_size<span class="token punctuation">,</span> mode<span class="token punctuation">)</span>
+    warped <span class="token operator">=</span> cv2<span class="token punctuation">.</span>warpAffine<span class="token punctuation">(</span>img<span class="token punctuation">,</span> M<span class="token punctuation">,</span> <span class="token punctuation">(</span>image_size<span class="token punctuation">,</span> image_size<span class="token punctuation">)</span><span class="token punctuation">,</span> borderValue<span class="token operator">=</span><span class="token number">0.0</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> warped
+
+<span class="token keyword">def</span> <span class="token function">load_face_database</span><span class="token punctuation">(</span>folder<span class="token operator">=</span><span class="token string">"database"</span><span class="token punctuation">,</span> det_rknn<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span> rec_rknn<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Load face database
+    
+    Args:
+        folder (str): Path to face image database folder
+        det_rknn: Face detection model
+        rec_rknn: Face recognition model
+    
+    Returns:
+        list: List containing face information
+    """</span>
+    face_database <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> filename <span class="token keyword">in</span> os<span class="token punctuation">.</span>listdir<span class="token punctuation">(</span>folder<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> filename<span class="token punctuation">.</span>endswith<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">".png"</span><span class="token punctuation">,</span> <span class="token string">".jpg"</span><span class="token punctuation">,</span> <span class="token string">".jpeg"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            path <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>folder<span class="token punctuation">,</span> filename<span class="token punctuation">)</span>
+            img <span class="token operator">=</span> cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>path<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> img <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+                resize_img<span class="token punctuation">,</span> det_scale <span class="token operator">=</span> preprocess<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+                resize_img_4d <span class="token operator">=</span> np<span class="token punctuation">.</span>expand_dims<span class="token punctuation">(</span>resize_img<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+                net_outs <span class="token operator">=</span> det_rknn<span class="token punctuation">.</span>inference<span class="token punctuation">(</span>inputs<span class="token operator">=</span><span class="token punctuation">[</span>resize_img_4d<span class="token punctuation">]</span><span class="token punctuation">,</span> data_format<span class="token operator">=</span><span class="token string">'nhwc'</span><span class="token punctuation">)</span>
+                det_boxes<span class="token punctuation">,</span> kpss <span class="token operator">=</span> retinaface_post_process<span class="token punctuation">(</span>net_outs<span class="token punctuation">,</span> det_scale<span class="token punctuation">)</span>
+                <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>det_boxes<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    bbox <span class="token operator">=</span> det_boxes<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span>
+                    det_score <span class="token operator">=</span> det_boxes<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span>
+                    kps <span class="token operator">=</span> <span class="token boolean">None</span>
+                    <span class="token keyword">if</span> kpss <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+                        kps <span class="token operator">=</span> kpss<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+                    face <span class="token operator">=</span> Face<span class="token punctuation">(</span>bbox<span class="token operator">=</span>bbox<span class="token punctuation">,</span> kps<span class="token operator">=</span>kps<span class="token punctuation">,</span> det_score<span class="token operator">=</span>det_score<span class="token punctuation">)</span>
+                    aimg <span class="token operator">=</span> norm_crop<span class="token punctuation">(</span>img<span class="token punctuation">,</span> landmark<span class="token operator">=</span>kps<span class="token punctuation">,</span> image_size<span class="token operator">=</span><span class="token number">112</span><span class="token punctuation">)</span>
+                    aimg_4d <span class="token operator">=</span> np<span class="token punctuation">.</span>expand_dims<span class="token punctuation">(</span>aimg<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+                    face<span class="token punctuation">.</span>embedding <span class="token operator">=</span> rec_rknn<span class="token punctuation">.</span>inference<span class="token punctuation">(</span>inputs<span class="token operator">=</span><span class="token punctuation">[</span>aimg_4d<span class="token punctuation">]</span><span class="token punctuation">,</span> data_format<span class="token operator">=</span><span class="token string">'nhwc'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    face<span class="token punctuation">.</span>name <span class="token operator">=</span> filename<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+                    face_database<span class="token punctuation">.</span>append<span class="token punctuation">(</span>face<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> face_database
+
+<span class="token keyword">def</span> <span class="token function">detect_faces</span><span class="token punctuation">(</span>img<span class="token punctuation">,</span> det_rknn<span class="token punctuation">,</span> rec_rknn<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Detect faces in image and extract features
+    
+    Args:
+        img: Input image
+        det_rknn: Face detection model
+        rec_rknn: Face recognition model
+    
+    Returns:
+        list: List of detected faces
+    """</span>
+    resize_img<span class="token punctuation">,</span> det_scale <span class="token operator">=</span> preprocess<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
+    resize_img_4d <span class="token operator">=</span> np<span class="token punctuation">.</span>expand_dims<span class="token punctuation">(</span>resize_img<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+    net_outs <span class="token operator">=</span> det_rknn<span class="token punctuation">.</span>inference<span class="token punctuation">(</span>inputs<span class="token operator">=</span><span class="token punctuation">[</span>resize_img_4d<span class="token punctuation">]</span><span class="token punctuation">,</span> data_format<span class="token operator">=</span><span class="token string">'nhwc'</span><span class="token punctuation">)</span>
+    det_boxes<span class="token punctuation">,</span> kpss <span class="token operator">=</span> retinaface_post_process<span class="token punctuation">(</span>net_outs<span class="token punctuation">,</span> det_scale<span class="token punctuation">)</span>
+    
+    faces <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>det_boxes<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        bbox <span class="token operator">=</span> det_boxes<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span>
+        det_score <span class="token operator">=</span> det_boxes<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span>
+        kps <span class="token operator">=</span> kpss<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token keyword">if</span> kpss <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span> <span class="token keyword">else</span> <span class="token boolean">None</span>
+        
+        face <span class="token operator">=</span> Face<span class="token punctuation">(</span>bbox<span class="token operator">=</span>bbox<span class="token punctuation">,</span> kps<span class="token operator">=</span>kps<span class="token punctuation">,</span> det_score<span class="token operator">=</span>det_score<span class="token punctuation">)</span>
+        aimg <span class="token operator">=</span> norm_crop<span class="token punctuation">(</span>img<span class="token punctuation">,</span> landmark<span class="token operator">=</span>kps<span class="token punctuation">,</span> image_size<span class="token operator">=</span><span class="token number">112</span><span class="token punctuation">)</span>
+        aimg_4d <span class="token operator">=</span> np<span class="token punctuation">.</span>expand_dims<span class="token punctuation">(</span>aimg<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+        face<span class="token punctuation">.</span>embedding <span class="token operator">=</span> rec_rknn<span class="token punctuation">.</span>inference<span class="token punctuation">(</span>inputs<span class="token operator">=</span><span class="token punctuation">[</span>aimg_4d<span class="token punctuation">]</span><span class="token punctuation">,</span> data_format<span class="token operator">=</span><span class="token string">'nhwc'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        faces<span class="token punctuation">.</span>append<span class="token punctuation">(</span>face<span class="token punctuation">)</span>
+    
+    <span class="token keyword">return</span> faces
+
+<span class="token keyword">def</span> <span class="token function">recognize_faces</span><span class="token punctuation">(</span>faces<span class="token punctuation">,</span> face_database<span class="token punctuation">,</span> threshold<span class="token operator">=</span><span class="token number">0.5</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Recognize faces
+    
+    Args:
+        faces: List of faces to recognize
+        face_database: Face database
+        threshold: Recognition threshold
+    
+    Returns:
+        list: List of recognized faces
+    """</span>
+    <span class="token comment"># Convert database face features to matrix</span>
+    target_feats <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> face <span class="token keyword">in</span> face_database<span class="token punctuation">:</span>
+        target_feats<span class="token punctuation">.</span>append<span class="token punctuation">(</span>face<span class="token punctuation">.</span>normed_embedding<span class="token punctuation">)</span>
+    target_feats <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>target_feats<span class="token punctuation">,</span> dtype<span class="token operator">=</span>np<span class="token punctuation">.</span>float32<span class="token punctuation">)</span>
+    
+    <span class="token comment"># Recognize each face</span>
+    <span class="token keyword">for</span> face <span class="token keyword">in</span> faces<span class="token punctuation">:</span>
+        sims <span class="token operator">=</span> np<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>target_feats<span class="token punctuation">,</span> face<span class="token punctuation">.</span>normed_embedding<span class="token punctuation">)</span>
+        best_match_idx <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>sims<span class="token punctuation">.</span>argmax<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        max_similarity <span class="token operator">=</span> sims<span class="token punctuation">[</span>best_match_idx<span class="token punctuation">]</span>
+        
+        <span class="token keyword">if</span> max_similarity <span class="token operator">></span> threshold<span class="token punctuation">:</span>
+            face<span class="token punctuation">.</span>name <span class="token operator">=</span> face_database<span class="token punctuation">[</span>best_match_idx<span class="token punctuation">]</span><span class="token punctuation">.</span>name
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Recognized: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>face<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span></span><span class="token string"> Similarity: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>max_similarity<span class="token punctuation">:</span><span class="token format-spec">.2f</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            face<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"unknown"</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Unknown face detected, max similarity: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>max_similarity<span class="token punctuation">:</span><span class="token format-spec">.2f</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"All similarities for this face: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>sims<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">return</span> faces
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    <span class="token comment"># Create RKNN objects</span>
+    det_rknn <span class="token operator">=</span> RKNN<span class="token punctuation">(</span>verbose<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    rec_rknn <span class="token operator">=</span> RKNN<span class="token punctuation">(</span>verbose<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># Configure models</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'--> Config model'</span><span class="token punctuation">)</span>
+    det_rknn<span class="token punctuation">.</span>config<span class="token punctuation">(</span>mean_values<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> std_values<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> target_platform<span class="token operator">=</span><span class="token string">'rk3588'</span><span class="token punctuation">)</span>
+    rec_rknn<span class="token punctuation">.</span>config<span class="token punctuation">(</span>mean_values<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> std_values<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> target_platform<span class="token operator">=</span><span class="token string">'rk3588'</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># Load ONNX models</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'--> Loading model'</span><span class="token punctuation">)</span>
+    ret <span class="token operator">=</span> det_rknn<span class="token punctuation">.</span>load_onnx<span class="token punctuation">(</span>model<span class="token operator">=</span>DET_ONNX_MODEL<span class="token punctuation">)</span>
+    ret <span class="token operator">*=</span> rec_rknn<span class="token punctuation">.</span>load_onnx<span class="token punctuation">(</span>model<span class="token operator">=</span>REC_ONNX_MODEL<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> ret <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Load model failed!'</span><span class="token punctuation">)</span>
+        exit<span class="token punctuation">(</span>ret<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># Build models</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'--> Building model'</span><span class="token punctuation">)</span>
+    ret <span class="token operator">=</span> det_rknn<span class="token punctuation">.</span>build<span class="token punctuation">(</span>do_quantization<span class="token operator">=</span>QUANTIZE_ON<span class="token punctuation">,</span> dataset<span class="token operator">=</span>DATASET<span class="token punctuation">)</span>
+    ret <span class="token operator">*=</span> rec_rknn<span class="token punctuation">.</span>build<span class="token punctuation">(</span>do_quantization<span class="token operator">=</span>QUANTIZE_ON<span class="token punctuation">,</span> dataset<span class="token operator">=</span>DATASET<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> ret <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Build model failed!'</span><span class="token punctuation">)</span>
+        exit<span class="token punctuation">(</span>ret<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># Export RKNN models</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'--> Export rknn model'</span><span class="token punctuation">)</span>
+    ret <span class="token operator">=</span> det_rknn<span class="token punctuation">.</span>export_rknn<span class="token punctuation">(</span>DET_RKNN_MODEL<span class="token punctuation">)</span>
+    ret <span class="token operator">*=</span> rec_rknn<span class="token punctuation">.</span>export_rknn<span class="token punctuation">(</span>REC_RKNN_MODEL<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> ret <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Export rknn model failed!'</span><span class="token punctuation">)</span>
+        exit<span class="token punctuation">(</span>ret<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># Init runtime environment</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'--> Init runtime environment'</span><span class="token punctuation">)</span>
+    ret <span class="token operator">=</span> det_rknn<span class="token punctuation">.</span>init_runtime<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    ret <span class="token operator">*=</span> rec_rknn<span class="token punctuation">.</span>init_runtime<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> ret <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Init runtime environment failed!'</span><span class="token punctuation">)</span>
+        exit<span class="token punctuation">(</span>ret<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># Load face database</span>
+    face_database <span class="token operator">=</span> load_face_database<span class="token punctuation">(</span>folder<span class="token operator">=</span><span class="token string">"database"</span><span class="token punctuation">,</span> det_rknn<span class="token operator">=</span>det_rknn<span class="token punctuation">,</span> rec_rknn<span class="token operator">=</span>rec_rknn<span class="token punctuation">)</span>
+
+    <span class="token comment"># Process input image</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'--> Loading and processing image: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>INPUT_IMAGE_PATH<span class="token punctuation">&#125;</span></span><span class="token string">'</span></span><span class="token punctuation">)</span>
+    current_img <span class="token operator">=</span> cv2<span class="token punctuation">.</span>imread<span class="token punctuation">(</span>INPUT_IMAGE_PATH<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> current_img <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Error: Could not load image from </span><span class="token interpolation"><span class="token punctuation">&#123;</span>INPUT_IMAGE_PATH<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        sys<span class="token punctuation">.</span>exit<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># Detect faces</span>
+    current_image_faces <span class="token operator">=</span> detect_faces<span class="token punctuation">(</span>current_img<span class="token punctuation">,</span> det_rknn<span class="token punctuation">,</span> rec_rknn<span class="token punctuation">)</span>
+    
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>current_image_faces<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token comment"># Recognize faces</span>
+        current_image_faces <span class="token operator">=</span> recognize_faces<span class="token punctuation">(</span>current_image_faces<span class="token punctuation">,</span> face_database<span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"No faces detected in input image"</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># Draw results</span>
+    draw_img <span class="token operator">=</span> draw_on<span class="token punctuation">(</span>current_img<span class="token punctuation">,</span> current_image_faces<span class="token punctuation">)</span>
+    output_image_path <span class="token operator">=</span> <span class="token string">'recognized_output.jpg'</span>
+    cv2<span class="token punctuation">.</span>imwrite<span class="token punctuation">(</span>output_image_path<span class="token punctuation">,</span> draw_img<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Processed image saved to: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>output_image_path<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+    det_rknn<span class="token punctuation">.</span>release<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>运行onnx2rknn.py代码时，需要首先在运行目录创建一个<code>dataset.txt</code>的文件，文件的内容如下：</p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">database/Sheldon.png<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>运行结束后，本地会生成一个名为recognized_output.jpg的图像在运行文件夹，结果如下图所示。</p>
+<p><img src="/JunyongCHEN/2025/05/23/RK3588s-NPU%E8%B5%8B%E8%83%BD%EF%BC%9A%E6%9E%84%E5%BB%BA%E9%AB%98%E6%95%88%E5%9B%BE%E7%89%87%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/recognized_output.jpg" alt="识别结果"></p>
+<h3 id="3-6-鲁班猫（RK3588s）环境配置"><a href="#3-6-鲁班猫（RK3588s）环境配置" class="headerlink" title="3.6 鲁班猫（RK3588s）环境配置"></a>3.6 鲁班猫（RK3588s）环境配置</h3><p>接下来的步骤便是将量化好后的rknn模型放到鲁班猫上运行，这里需要配置鲁班猫的环境。使用RK3588s的板载NPU有两种方式，一种时使用RKNN Server远程调用开发板上的Runtime环境，这种方式的目的主要是为了方便调试；另外一种是在板卡上直接安装RKNN Toolkit Lite2，直接在开发板本地运行和调用rknn模型，这里使用的是这种方式。这里参考的安装教程是<a href="rknn.html#rknn-toolkit-lite2">RKNN Toolkit Lite2安装教程</a>。</p>
+<p>因为我的PC版本rknn-toolkit2是通过pip安装的，这里先看一下rknn-toolkit2的版本，这里可以看到版本是2.3.2。<br><img src="/JunyongCHEN/2025/05/23/RK3588s-NPU%E8%B5%8B%E8%83%BD%EF%BC%9A%E6%9E%84%E5%BB%BA%E9%AB%98%E6%95%88%E5%9B%BE%E7%89%87%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/rknn-toolkit2-version.png" alt="查看rknn-toolkit2版本号"></p>
+<p><strong>安装相关依赖和软件包</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">pip3 install wheel
+sudo apt-get install -y python3-opencv
+sudo apt-get install -y python3-numpy
+sudo apt -y install python3-setuptools<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>手动安装Toolkit Lite2的python库</strong></p>
+<p>该库的安装包位于官方仓库<a href="rknn-toolkit2">airockchip/rknn-toolkit2</a>的rknn-toolkit-lite2\packages目录下，选择适合自己python版本的库安装，我的系统默认装的是python3.9。为了避免出现一些奇奇怪怪的问题，rknn_toolkit_lite2的版本号要和PC安装的rknn-toolkit2版本号对应上，如果对不上的话，可以选择升级PC的版本也可以去github的历史仓库下载旧版本的rknn_toolkit_lite2库。 </p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip3 <span class="token function">install</span> rknn_toolkit_lite2-2.3.2-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>替换librknnrt.so库</strong></p>
+<p>librknnrt.so库也需要更新为和rknn-toolkit2同版本的动态库，该动态库文件位于官方仓库<a href="rknn-toolkit2">airockchip/rknn-toolkit2</a>的rknpu2\runtime\Linux\librknn_api\aarch64目录下，将该文件复制到开发板的/usr/lib/目录下。</p>
+<p><strong>硬件环境展示</strong></p>
+<p>硬件使用的是鲁班猫4摄像头和显示屏套装，我买这个套装主要是为了后面方便一体化的机械结构设计。如果只是正常的开发设计的话，使用普通的HDMI显示屏和USB摄像头，是最方便的选择。使用野火的IMX415摄像头和7寸MIPI屏幕需要参考官方的<a href="camera.html">摄像头</a>和<a href="mipi_dsi.html">屏幕</a>的教程配置启用一下对应的设备树。下图是本设备的套装的实物图。</p>
+<p><img src="/JunyongCHEN/2025/05/23/RK3588s-NPU%E8%B5%8B%E8%83%BD%EF%BC%9A%E6%9E%84%E5%BB%BA%E9%AB%98%E6%95%88%E5%9B%BE%E7%89%87%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/dev-package.jpg" alt="dev-package"></p>
+<table>
+<thead>
+<tr>
+<th>设备</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主控</td>
+<td>鲁班猫4 （16+128G）</td>
+</tr>
+<tr>
+<td>显示屏</td>
+<td>7寸MIPI屏</td>
+</tr>
+<tr>
+<td>摄像头</td>
+<td>IMX415 MIPI摄像头</td>
+</tr>
+</tbody></table>
+<h3 id="3-7-运行代码"><a href="#3-7-运行代码" class="headerlink" title="3.7 运行代码"></a>3.7 运行代码</h3><p>安装代码依赖的库</p>
+<pre class="line-numbers language-python3" data-language="python3"><code class="language-python3">pip3 install scikit-image
+pip3 install numpy&#x3D;&#x3D;1.23.5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>后续内容烂尾，由于个人时间和研究方向原因，以及设备回收给了实验室，将不对运行代码进行重构和分析，如想要RK3588s真机运行代码，请参考下面仓库开源的内容，</strong></p>
+<p><a href="face_identification_system_base_rk3588_npu">face_identification_system_base_RK3588_NPU: 人脸识别系统的NPU实现</a></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/JunyongCHEN/about" rel="external nofollow noreferrer">JunyongCHEN</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://JunyongCHEN.github.io/JunyongCHEN/JunyongCHEN/2025/05/23/RK3588s-NPU%E8%B5%8B%E8%83%BD%EF%BC%9A%E6%9E%84%E5%BB%BA%E9%AB%98%E6%95%88%E5%9B%BE%E7%89%87%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/">https://JunyongCHEN.github.io/JunyongCHEN/JunyongCHEN/2025/05/23/RK3588s-NPU%E8%B5%8B%E8%83%BD%EF%BC%9A%E6%9E%84%E5%BB%BA%E9%AB%98%E6%95%88%E5%9B%BE%E7%89%87%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/JunyongCHEN/about" target="_blank">JunyongCHEN</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/JunyongCHEN/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">
+                                    <span class="chip bg-color">计算机视觉</span>
+                                </a>
+                            
+                                <a href="/JunyongCHEN/tags/RK3588/">
+                                    <span class="chip bg-color">RK3588</span>
+                                </a>
+                            
+                                <a href="/JunyongCHEN/tags/NPU/">
+                                    <span class="chip bg-color">NPU</span>
+                                </a>
+                            
+                                <a href="/JunyongCHEN/tags/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/">
+                                    <span class="chip bg-color">人脸识别</span>
+                                </a>
+                            
+                                <a href="/JunyongCHEN/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                                    <span class="chip bg-color">深度学习</span>
+                                </a>
+                            
+                                <a href="/JunyongCHEN/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/">
+                                    <span class="chip bg-color">嵌入式</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/JunyongCHEN/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/JunyongCHEN/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/JunyongCHEN/2025/05/26/Win11-%E4%B8%93%E4%B8%9A%E5%B7%A5%E4%BD%9C%E7%AB%99%E7%89%88%E5%AE%89%E8%A3%85-WSL-Ubuntu-20-04-%E5%85%A8%E6%94%BB%E7%95%A5/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/JunyongCHEN/medias/featureimages/16.jpg" class="responsive-img" alt="Win11 专业工作站版安装 WSL Ubuntu 20.04 全攻略">
+                        
+                        <span class="card-title">Win11 专业工作站版安装 WSL Ubuntu 20.04 全攻略</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            详细介绍在Windows 11专业工作站版上安装和配置WSL Ubuntu 20.04的完整步骤，包括环境准备、安装过程、常见问题解决等
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-05-26
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/JunyongCHEN/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="post-category">
+                                    环境配置
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/JunyongCHEN/tags/Windows/">
+                        <span class="chip bg-color">Windows</span>
+                    </a>
+                    
+                    <a href="/JunyongCHEN/tags/WSL/">
+                        <span class="chip bg-color">WSL</span>
+                    </a>
+                    
+                    <a href="/JunyongCHEN/tags/Ubuntu/">
+                        <span class="chip bg-color">Ubuntu</span>
+                    </a>
+                    
+                    <a href="/JunyongCHEN/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
+                        <span class="chip bg-color">开发环境</span>
+                    </a>
+                    
+                    <a href="/JunyongCHEN/tags/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/">
+                        <span class="chip bg-color">系统配置</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/JunyongCHEN/2025/03/12/%E5%BC%BA%E5%88%B6%E4%B8%AD%E6%96%ADapt%E5%AE%89%E8%A3%85%E5%AF%BC%E8%87%B4%E5%8C%85%E6%8D%9F%E5%9D%8F/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/JunyongCHEN/medias/featureimages/8.jpg" class="responsive-img" alt="强制中断apt安装导致包损坏">
+                        
+                        <span class="card-title">强制中断apt安装导致包损坏</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            本文将分享强制中断apt的安装，导致apt无法使用的解决方案
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-03-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/JunyongCHEN/categories/Linux%E7%9B%B8%E5%85%B3/" class="post-category">
+                                    Linux相关
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/JunyongCHEN/tags/Linux%E8%BF%90%E7%BB%B4/">
+                        <span class="chip bg-color">Linux运维</span>
+                    </a>
+                    
+                    <a href="/JunyongCHEN/tags/apt%E5%BC%82%E5%B8%B8/">
+                        <span class="chip bg-color">apt异常</span>
+                    </a>
+                    
+                    <a href="/JunyongCHEN/tags/TexLive/">
+                        <span class="chip bg-color">TexLive</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/JunyongCHEN/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/JunyongCHEN/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/JunyongCHEN/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/JunyongCHEN/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/JunyongCHEN/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/JunyongCHEN/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/JunyongCHEN/libs/aplayer/APlayer.min.js"></script>
+<script src="/JunyongCHEN/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2026</span>
+            
+            <a href="/JunyongCHEN/about" target="_blank">JunyongCHEN</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/JunyongCHEN" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:jchen932@connect.hkust-gz.edu.cn" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=3312428491" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 3312428491" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/JunyongCHEN/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/JunyongCHEN/libs/materialize/materialize.min.js"></script>
+    <script src="/JunyongCHEN/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/JunyongCHEN/libs/aos/aos.js"></script>
+    <script src="/JunyongCHEN/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/JunyongCHEN/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/JunyongCHEN/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/JunyongCHEN/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/JunyongCHEN/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/JunyongCHEN/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/JunyongCHEN/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
